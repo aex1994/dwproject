@@ -17,4 +17,3 @@ Manual Setup Needed:
 5. Run this bash command inside the project folder "~/dwproject" sudo chmod 777 mainscript.sh
 6. Run mainscript.sh using the command ./mainscript.sh
 7. Additionally, you can run ./rmcsvfiles.sh if you want to delete all generated csv files to save space
-8. This line is added to test commit
