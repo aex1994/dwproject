@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:16  # Use the desired version of PostgreSQL
+    container_name: postgres_instance
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}       # Username for the PostgreSQL instance stored in .env
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Password for the PostgreSQL instance stored in .env
+      POSTGRES_DB: ${POSTGRES_DB}      # Name of the database to create stored in .env    
+    ports:
+      - "5433:5432"  # Expose PostgreSQL on the host machine's port 5432
