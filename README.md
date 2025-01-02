@@ -1,4 +1,4 @@
-This project:
+# This project:
 
 1. Installs dependencies such as pandas, psql-client CLI, pyscopg2, kaggle api, and python-dotenv
 2. Imports data from Kaggle
@@ -8,7 +8,7 @@ This project:
 6. Inserts the data from the CSV files to the appropriate tables in the PostgreSQL instance
 7. Queries the PostgreSQL instance to verify the accuracy of the data warehouse.
 
-Manual Setup Needed:
+## Manual Setup Needed:
 
 1. The project was developed in a WSL2 enivronment in Windows 11 using Ubuntu 24.04 as distro and VSCode as IDE. If WSL2 is not yet enabled in your machine, follow these instrcutions (https://learn.microsoft.com/en-us/windows/wsl/install).
 2. Manually install Docker Desktop (https://www.docker.com/products/docker-desktop/) in your machine and setup WSL2 integration (https://docs.docker.com/desktop/features/wsl/). Make sure Docker Desktop is running for the duration of the script.
