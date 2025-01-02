@@ -16,6 +16,6 @@
 4. All contents of this folder should be in a folder in your home directory called "dwproject". The working project directory is <~/dwproject>. You can just clone this repo in your home folder using "git clone".
 5. Rename the env.txt file to .env
 6. Create a Kaggle account (https://www.kaggle.com/) and generate your API token. The downloaded API token, kaggle.json, should be copied inside this directory <~/.config/kaggle>
-7. Run this bash command inside the project folder <~/dwproject> "sudo chmod 777 mainscript.sh"
+7. Run this bash command inside the project folder <~/dwproject> ```bash sudo chmod 777 mainscript.sh```
 8. Run mainscript.sh using the command ./mainscript.sh
 9. Additionally, you can run ./rmcsvfiles.sh if you want to delete all generated csv files to save storage space. Just make sure to perform "sudo chmod 777 rmcsvfiles.sh"
