@@ -2,7 +2,7 @@ This project:
 
 1. Installs dependencies such as pandas, psql-client CLI, pyscopg2, kaggle api, and python-dotenv
 2. Imports data from Kaggle
-3. Transforms the data from Kaggle to dimension tables and fact table and saves them to CSV format
+3. Transforms the data from Kaggle to dimension tables and fact table and saves them to CSV format. Duplicate and missing values were handled. 
 4. Sets up a PostgreSQL instance using Docker Compose
 5. Creates dimension tables and fact table in the PostgreSQL instance
 6. Inserts the data from the CSV files to the appropriate tables in the PostgreSQL instance
