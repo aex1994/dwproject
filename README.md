@@ -1,4 +1,6 @@
-# Data Warehousing Project Overview:
+# Data Warehousing Project for Car Sales Kaggle Dataset
+
+## Overview:
 
 1. Installs dependencies such as pandas, psql-client CLI, pyscopg2, kaggle api, and python-dotenv
 2. Imports data from Kaggle
