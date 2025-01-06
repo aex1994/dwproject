@@ -1,4 +1,4 @@
-# This project:
+# Data Warehousing Project Overview:
 
 1. Installs dependencies such as pandas, psql-client CLI, pyscopg2, kaggle api, and python-dotenv
 2. Imports data from Kaggle
@@ -19,3 +19,18 @@
 7. Run this bash command inside the project folder **~/dwproject** ```sudo chmod 777 mainscript.sh```
 8. Run mainscript.sh using the command ```./mainscript.sh```
 9. Additionally, you can run ```./rmcsvfiles.sh``` if you want to delete all generated csv files to save storage space. Just make sure to perform ```sudo chmod 777 rmcsvfiles.sh```
+
+## Pipeline:
+
+### mydependencies.py
+
+This python code installs the following:
+
+1. kaggle API -> for extracting the car_sales dataset in Kaggle
+2. pandas -> for transforming the dataset from kaggle to CSV files structured as fact table and dimension tables
+3. psycopg2-bin -> for connecting to the PostgreSQL instance and creating the necessary tables suited for the CSV files generated from the transformation
+4. postgresql-client-16 -> for connecting to the PostgreSQL instance and running sample queries
+5. python-dotenv -> for python to access the .env file where credentials are stored and used in connecting to the PostgreSQL instance
+
+![screenshot_mydependcies.py](img/mydependencies.png)
+
