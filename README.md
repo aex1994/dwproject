@@ -26,14 +26,12 @@ sudo chmod 777 mainscript.sh
 ```bash
 ./mainscript.sh
 ```
-9. Additionally, you can run
-```bash
-./rmcsvfiles.sh
-``` 
-if you want to delete all generated csv files to save storage space. Just make sure to perform 
+9. Additionally, you can run the code below if you want to delete all generated csv files to save storage space. Just make sure to perform 
 ```bash
 sudo chmod 777 rmcsvfiles.sh
+./rmcsvfiles.sh
 ```
+
 
 ## Pipeline:
 
