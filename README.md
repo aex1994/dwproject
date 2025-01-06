@@ -34,3 +34,41 @@ This python code installs the following:
 
 ![screenshot_mydependcies.py](img/mydependencies.png)
 
+### importdata.py
+
+This python code extracts the car sales dataset from Kaggle and renames it to **Vehicle_sales_data.csv**
+
+![screenshot_importdata.py](img/importdata.png)
+
+### transform.py
+
+This python code uses pandas to make the necessary transformations on the dataset and load them into CSV files. The transformation includes:
+
+1. Dropping of duplicate rows by checking duplicate vin values because vin is supposed to be unique for each row. ```df.drop_duplicates(subset='vin', inplace=True)```
+2. Handling missing values using the following functions:
+
+    a. fillna_with_mode -> imputes missing values by getting the mode of for the target column based on a reference column. For example, when imputing missing values for the column **make**, instead of getting the mode of the entire **make** column, it is grouped by the column **seller**, then the mode for each group is used to impute the missing values for the **make** column. This is smart way of mitigating the errors and uncertainty that comes with missing value imputation.
+
+    ```python
+    def fillna_with_mode(target_col, reference_col, dataframe):
+    
+    most_freq = dataframe.groupby(reference_col)[target_col] \
+        .agg(lambda x: x.mode()[0] if not x.mode().empty else np.nan)
+    most_freq = most_freq.reset_index(name = 'most_freq')
+    
+    merged = pd.merge(dataframe, most_freq, on=reference_col, how='left')
+    dataframe[target_col] = dataframe[target_col].fillna(merged['most_freq'])
+    return dataframe
+    ```
+
+    b. fillna_with_mean -> imputes missing values for the columns with numerical values such as the **mmr** and **sellingprice** columns. No further strategies were employed here unlike the function above.
+
+    ```python
+    def fillna_with_mean(target_col, dataframe):
+    
+    mean_value = int(dataframe[target_col].mean())
+    dataframe[target_col] = dataframe[target_col].fillna(mean_value)
+    return dataframe
+    ```
+3. Transforming the date column to a more structured format
+
