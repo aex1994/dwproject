@@ -128,32 +128,6 @@ df.drop_duplicates(subset='vin', inplace=True)
 
 5. Final casting of data types to all the columns of the dataframe:
 
-```python
-df['year'] = df['year'].astype(int)
-df['make'] = df['make'].astype('string')
-df['model'] = df['model'].astype('string')
-df['trim'] = df['trim'].astype('string')
-df['body'] = df['body'].astype('string')
-df['transmission'] = df['transmission'].astype('string')
-df['vin'] = df['vin'].astype('string')
-df['state'] = df['state'].astype('string')
-df['condition'] = df['condition'].astype(int)
-df['odometer'] = df['odometer'].astype(int)
-df['color'] = df['color'].astype('string')
-df['interior'] = df['interior'].astype('string')
-df['seller'] = df['seller'].astype('string')
-df['mmr'] = df['mmr'].astype(float)
-df['sellingprice'] = df['sellingprice'].astype(float)
-df['saledate'] = pd.to_datetime(df['saledate'])
-df['saledate_year'] = df['saledate_year'].astype(int)
-df['saledate_month'] = df['saledate_month'].astype(int)
-df['saledate_monthname'] = df['saledate_monthname'].astype('string')
-df['saledate_day'] = df['saledate_day'].astype(int)
-df['saledate_weekdayname'] = df['saledate_weekdayname'].astype('string')
-df['saledate_weekday'] = df['saledate_weekday'].astype(int)
-df['quarter'] = df['quarter'].astype(int)
-df['quartername'] = df['quartername'].astype('string')
-```
 6. Summarizes the transformation showing how many rows were dropped and the data type of each column.
 
 ![transform1](img/transform1.png)
@@ -233,9 +207,23 @@ def psqldocker_up():
     except subprocess.CalledProcessError as e:
         print(f"Error starting the PSQL instance: {e}")
 ```
+Here is the docker-compose.yml file used to create a PostgreSQL instance:
+```yml
+services:
+  db:
+    image: postgres:16  # Use the desired version of PostgreSQL
+    container_name: postgres_instance
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}       # Username for the PostgreSQL instance stored in .env
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Password for the PostgreSQL instance stored in .env
+      POSTGRES_DB: ${POSTGRES_DB}      # Name of the database to create stored in .env    
+    ports:
+      - "5433:5432"  # Expose PostgreSQL on the host machine's port 5432
+```
+This is the docker desktop showing that the container is running a PostgreSQL instance
 ![docker-container](img/docker_container.png)
 
-2. psqldocker_down -> closes the container and removes local volumes
+2. psqldocker_down -> closes the container and removes local volumes created by the container
 ```python
 def psqldocker_down():
 
