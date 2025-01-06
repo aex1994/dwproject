@@ -149,7 +149,7 @@ df.drop_duplicates(subset='vin', inplace=True)
     dateDimTable.to_csv('~/dwproject/dateDimTable.csv', index=False)
     print('dateDimTable.csv created')
     ```
-    
+
 ![transform3](img/transform3.png)
 
 ### Running a PostgreSQL Instance in Docker
@@ -198,7 +198,7 @@ ERD
 
 2. create_tables -> a function in **psqlconnect.py** which uses the connection object returned by the **psql_conn** function, this code created the dimension and fact tables. The actual SQL command is a function in the **sqlqueries.py** with the name **sql_query_creating_tables** **psql**.
 
-3. There are several functions in the **psql_conn** for inserting the data from the CSV files to each PostgreSQL tables. For this process, the library **subprocess** was used and not the **psycopg2**. The **dotenv** library allows the code to access variables in the **.env** file and the db password is stored in **os.environ['PGPASSWORD']** for automation.
+3. There are several functions in the **psqlconnect.py** for inserting the data from the CSV files to each PostgreSQL tables. For this process, the library **subprocess** was used and not the **psycopg2**. The **dotenv** library allows the code to access variables in the **.env** file and the db password is stored in **os.environ['PGPASSWORD']** for automation.
 
     Here is one example:
     ```python
@@ -233,6 +233,14 @@ ERD
     ```
 
 ![psqlconnect](img/psqlconnect.png)
+
+### Querying the Database
+
+In this part, the database is queried to check if it is functional.
+
+1. sql_verify_queries -> this is a function in **psqlconncet.py** which runs prepared SQL queries from ***sqlqueries.py**.
+
+    Here
 
 
 
