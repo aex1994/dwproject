@@ -152,8 +152,67 @@ df['saledate_weekday'] = df['saledate_weekday'].astype(int)
 df['quarter'] = df['quarter'].astype(int)
 df['quartername'] = df['quartername'].astype('string')
 ```
-6. Summarizes the transformation showing how many rows were dropped.
+6. Summarizes the transformation showing how many rows were dropped and the data type of each column.
 
 ![transform1](img/transform1.png)
+
+7. Final check if there are missing values in the dataset and a sneak peek ot the first 5 rows of the dataframe
+
+![transform2](img/transform2.png)
+
+8. Creating multiple dataframes by splicing the original dataframe. This is done so that we can load the multiple dataframes into CSV files which are suited for fact table and dimension tables.
+
+```python
+dateDimTable = df[['saledate', 'saledate_year', 'saledate_month', 'saledate_monthname','saledate_day',
+                   'saledate_weekday', 'saledate_weekdayname', 'quarter', 'quartername', 
+                   ]].drop_duplicates()
+dateDimTable = dateDimTable.copy()
+dateDimTable['date_id'] = dateDimTable.reset_index().index+1
+dateDimTable.to_csv('~/dwproject/dateDimTable.csv', index=False)
+print('dateDimTable.csv created')
+
+#sellerDimTable
+sellerDimTable = df[['seller']].drop_duplicates()
+sellerDimTable = sellerDimTable.copy()
+sellerDimTable['seller_id'] = sellerDimTable.reset_index().index+1
+sellerDimTable.to_csv('~/dwproject/sellerDimTable.csv', index=False)
+print('sellerDimTable.csv created')
+
+#stateDimTable
+stateDimTable = df[['state']].drop_duplicates()
+stateDimTable = stateDimTable.copy()
+stateDimTable['state_id'] = stateDimTable.reset_index().index+1
+stateDimTable.to_csv('~/dwproject/stateDimTable.csv', index=False)
+print('stateDimTable.csv created')
+
+#vehicleDimTable
+vehicleDimTable = df[['year', 'make', 'model', 'trim', 'body', 'transmission', 'color', 'interior']].drop_duplicates()
+vehicleDimTable = vehicleDimTable.copy()
+vehicleDimTable['vehicle_id'] = vehicleDimTable.reset_index().index+1
+vehicleDimTable.to_csv('~/dwproject/vehicleDimTable.csv', index=False)
+print('vehicleDimTable.csv created')
+
+#salesFactTable
+salesFactTable = df.copy()
+salesFactTable = salesFactTable.merge(dateDimTable[['date_id', 'saledate']], on='saledate', how='left')
+salesFactTable = salesFactTable.merge(sellerDimTable[['seller_id', 'seller']], on='seller', how='left')
+salesFactTable = salesFactTable.merge(stateDimTable[['state_id', 'state']], on='state', how='left')
+salesFactTable = salesFactTable.merge(vehicleDimTable[['vehicle_id', 'year', 'make', 'model', 'trim', 'body', 
+                                                       'transmission', 'color', 'interior']], 
+                                      on=['year', 'make', 'model', 'trim', 'body', 'transmission', 'color', 'interior'], 
+                                      how='left')
+
+#Drop Redundant Columns (i.e., columns that are now part of the dimension tables)
+salesFactTable = salesFactTable.drop(columns=['year', 'make', 'model', 'trim', 'body', 'transmission',
+                                              'color', 'interior', 'saledate', 'seller', 'state',
+                                              'saledate_weekdayname','saledate_weekday', 'saledate_year',
+                                              'saledate_month', 'saledate_monthname', 'saledate_day',
+                                              'quarter', 'quartername'])
+salesFactTable['sale_id'] = salesFactTable.reset_index().index+1
+salesFactTable.to_csv('~/dwproject/salesFactTable.csv', index=False)
+print('salesFactTable.csv created')
+```
+![transform3](img/transform3.png)
+
 
 
