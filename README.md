@@ -32,7 +32,6 @@ sudo chmod 777 rmcsvfiles.sh
 ./rmcsvfiles.sh
 ```
 
-
 ## Pipeline:
 
 ### Installing Dependencies
@@ -123,9 +122,7 @@ df.drop_duplicates(subset='vin', inplace=True)
     df['quartername'] = 'Q' + df['quarter'].astype(str)
     ```
 4. After all the imputations are done, all other rows that still have a missing value will be dropped from the dataset.
-
-5. Final casting of proper data types to all the columns of the dataframe:
-
+5. Final casting of proper data types to all the columns of the dataframe.
 6. Summarizes the transformation showing how many rows were dropped and the data type of each column.
 
 ![transform1](img/transform1.png)
