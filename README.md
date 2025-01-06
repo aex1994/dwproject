@@ -216,5 +216,42 @@ print('salesFactTable.csv created')
 ```
 ![transform3](img/transform3.png)
 
+### psqldocker.py
+
+1. psqldocker_up -> establishes a PostgrSQL instance in the a docker container using the **docker-compose.yml** file
+```python
+def psqldocker_up():
+
+        # Command to run the docker-compose.yml file to start a PSQL instance
+        run_psql = ['docker-compose', 'up', '-d']
+        
+        # Run the run_psql command
+        try:
+            subprocess.run(run_psql, check=True)
+            print('PSQL instance successfully launched')
+        
+        except subprocess.CalledProcessError as e:
+            print(f"Error starting the PSQL instance: {e}")
+```
+![docker-container](img/docker_container.png)
+
+2. psqldocker_down -> closes the container and removes local volumes
+```python
+def psqldocker_down():
+
+        # Command to stop the running PSQL instance
+        run_psql = ['docker-compose', 'down', '-v']
+        
+        # Run the run_psql command
+        try:
+            subprocess.run(run_psql, check=True)
+            print('PSQL instance successfully stopped')
+        
+        except subprocess.CalledProcessError as e:
+            print(f"Error stopping the PSQL instance: {e}")
+```
+
+
+
 
 
