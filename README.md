@@ -238,9 +238,48 @@ ERD
 
 In this part, the database is queried to check if it is functional.
 
-1. sql_verify_queries -> this is a function in **psqlconncet.py** which runs prepared SQL queries from ***sqlqueries.py**.
+1. sql_verify_queries -> this is a function in **psqlconncet.py** which runs prepared SQL queries from **sqlqueries.py**.
 
-    Here
+```python
+def sql_verify_queries():
+    
+    psql_command.append(query_1())
+    
+    try:
+        print('First 5 rows of dateDimTable')
+        subprocess.run(psql_command, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error querying database table: {e}")  
+    
+    psql_command.pop()
+```
+
+    Here are two examples of a query from **sqlqueries.py**
+
+    ```python
+    def query_1():
+    
+    query = 'SELECT * FROM public."dateDimTable" LIMIT 5;'           
+    return query
+    ```
+
+    ```python
+    def query_6():
+    
+    query = '''SELECT v.make, COUNT(v.make) AS units_sold FROM "salesFactTable" AS s LEFT JOIN "dateDimTable" AS d 
+            ON s.date_id = d.date_id LEFT JOIN "sellerDimTable" AS sel ON sel.seller_id = s.seller_id LEFT JOIN "stateDimTable" AS st 
+            ON st.state_id = s.state_id LEFT JOIN "vehicleDimTable" AS v ON v.vehicle_id = s.vehicle_id GROUP BY v.make ORDER BY units_sold DESC LIMIT 10;'''         
+    return query
+    ```
+
+There are 7 queries in total and here are the output of each query:
+
+![sqlquereies1](img/sqlqueries1.png)
+![sqlqueries2](img/sqlqueries2.png)
+
+
+
+
 
 
 
