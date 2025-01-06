@@ -254,28 +254,81 @@ def sql_verify_queries():
     psql_command.pop()
 ```
 
-    Here are two examples of a query from **sqlqueries.py**
+Here are two examples of a query from **sqlqueries.py**
 
-    ```python
-    def query_1():
-    
-    query = 'SELECT * FROM public."dateDimTable" LIMIT 5;'           
-    return query
-    ```
+```python
+def query_1():
 
-    ```python
-    def query_6():
-    
-    query = '''SELECT v.make, COUNT(v.make) AS units_sold FROM "salesFactTable" AS s LEFT JOIN "dateDimTable" AS d 
-            ON s.date_id = d.date_id LEFT JOIN "sellerDimTable" AS sel ON sel.seller_id = s.seller_id LEFT JOIN "stateDimTable" AS st 
-            ON st.state_id = s.state_id LEFT JOIN "vehicleDimTable" AS v ON v.vehicle_id = s.vehicle_id GROUP BY v.make ORDER BY units_sold DESC LIMIT 10;'''         
-    return query
-    ```
+query = 'SELECT * FROM public."dateDimTable" LIMIT 5;'           
+return query
+```
+
+```python
+def query_6():
+
+query = '''SELECT v.make, COUNT(v.make) AS units_sold FROM "salesFactTable" AS s LEFT JOIN "dateDimTable" AS d 
+        ON s.date_id = d.date_id LEFT JOIN "sellerDimTable" AS sel ON sel.seller_id = s.seller_id LEFT JOIN "stateDimTable" AS st 
+        ON st.state_id = s.state_id LEFT JOIN "vehicleDimTable" AS v ON v.vehicle_id = s.vehicle_id GROUP BY v.make ORDER BY units_sold DESC LIMIT 10;'''         
+return query
+```
 
 There are 7 queries in total and here are the output of each query:
 
 ![sqlquereies1](img/sqlqueries1.png)
 ![sqlqueries2](img/sqlqueries2.png)
+
+### Closing the Pipeline
+
+For closing the ETL pipeline, the environment variable PGPASSWORD will be deleted then the psycopg2 connection will be closed. The docker container will be the last one to be closed.
+
+Clearing the environment variable PGPASSWORD
+```python
+    # Get a user input to proceed to closing the connection and stopping the db instance
+    input('Press enter to close the connection and stop the PSQL instance: ')
+    
+    # Clear the stored environment variable PGPASSWORD
+    print('Is PGPASSWORD still in environment variables?', end=' ')
+    print('PGPASSWORD' in os.environ)
+    print('Clearing environment variables')
+    del os.environ['PGPASSWORD']
+    print('Is PGPASSWORD still in environment variables?', end=' ')
+    print('PGPASSWORD' in os.environ) 
+```
+
+Closing the psycopg2 connection -> psql_close is function in the **psqlconncect.py** code
+```python
+def psql_close(conn):
+    
+    # Close the psql connection
+    try:
+        conn.close()
+        print('Connection to the PostgreSQL database closed')
+    
+    except OperationalError as e:
+        print(f"Error: {e}")
+        return None
+```
+
+Closing the docker container -> psqldocker_down is function in the **psqldocker.py** code
+```python
+def psqldocker_down():
+
+    # Command to stop the running PSQL instance
+    run_psql = ['docker-compose', 'down', '-v']
+    
+    # Run the run_psql command
+    try:
+        subprocess.run(run_psql, check=True)
+        print('PSQL instance successfully stopped')
+    
+    except subprocess.CalledProcessError as e:
+        print(f"Error stopping the PSQL instance: {e}")
+```
+
+![closeconn](img/closeconn.png)
+
+
+
 
 
 
