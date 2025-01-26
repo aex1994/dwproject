@@ -321,23 +321,3 @@ def psqldocker_down():
 ```
 
 ![closeconn](img/closeconn.png)
-
-TESTING NEW TOKEN
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
